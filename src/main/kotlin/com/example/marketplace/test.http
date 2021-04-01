@@ -1,0 +1,22 @@
+### C -> Create
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "produto 1",
+  "desc": "Produto 1, emagreça em 90 dias"
+}
+
+### "score": 200,
+###  "creationDate": "2021-03-30T20:12:32.445Z"
+
+### R -> Read
+GET http://localhost:8080/products
+Content-Type: application/json
+
+### U -> Update
+PUT http://localhost:8080/products/id1
+Content-Type: application/json
+
+### D -> Delete
+DELETE http://localhost:8080/products/id1
