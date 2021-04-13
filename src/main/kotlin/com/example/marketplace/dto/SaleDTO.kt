@@ -1,10 +1,9 @@
 package com.example.marketplace.dto
 
 import com.example.marketplace.entity.Category
+import com.example.marketplace.entity.Product
 
-data class ProductDTO(
-    var name: String,
-    var desc: String,
-    var category: Category,
+data class SaleDTO(
+    var productId: String,
     var userId: String
 )

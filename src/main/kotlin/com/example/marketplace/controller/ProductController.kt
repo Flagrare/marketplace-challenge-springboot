@@ -1,11 +1,9 @@
 package com.example.marketplace.controller
 
-import com.example.marketplace.ProductService
-import com.example.marketplace.data.Product
-import com.example.marketplace.data.ProductResponseObject
+import com.example.marketplace.service.ProductService
+import com.example.marketplace.data.ProductVO
 import com.example.marketplace.dto.ProductDTO
-import com.example.marketplace.exception.NotFoundException
-import org.springframework.http.HttpStatus
+import com.example.marketplace.entity.Product
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.logging.Logger
@@ -17,31 +15,31 @@ internal class ProductController(val productService: ProductService) {
     val logger: Logger = Logger.getLogger(ProductController::class.java.canonicalName)
 
     @PostMapping
-    fun createProduct(@RequestBody productDTO: ProductDTO): ResponseEntity<ProductResponseObject> {
+    fun createProduct(@RequestBody productDTO: ProductDTO): ResponseEntity<ProductVO> {
         val createdProduct = productService.createProduct(productDTO)
         logger.info("product created $createdProduct")
         return ResponseEntity
             .ok(
-                ProductResponseObject.fromEntity(createdProduct)
+                ProductVO.fromEntity(createdProduct)
             )
     }
 
     @GetMapping
-    fun getAllProduct(): ResponseEntity<List<ProductResponseObject>> {
+    fun getAllProduct(): ResponseEntity<List<ProductVO>> {
         val products = productService.findAll()
         return ResponseEntity
             .ok(
-                products.map { ProductResponseObject.fromEntity(it) }
+                products.map { ProductVO.fromEntity(it) }
             )
     }
 
     @GetMapping("/{id}")
-    fun getProductDetail(@PathVariable("id") id: String): ResponseEntity<ProductResponseObject> {
+    fun getProductDetail(@PathVariable("id") id: String): ResponseEntity<ProductVO> {
 
         val product = productService.findById(id)
         logger.info("product $product")
 
-        return ResponseEntity.ok(ProductResponseObject.fromEntity(product))
+        return ResponseEntity.ok(ProductVO.fromEntity(product))
 
     }
 
@@ -49,12 +47,12 @@ internal class ProductController(val productService: ProductService) {
     fun updateProduct(
         @PathVariable id: String,
         @RequestBody request: ProductDTO
-    ): ResponseEntity<ProductResponseObject> {
+    ): ResponseEntity<ProductVO> {
         val updatedCompany = productService.updateProduct(id, request)
 
         return ResponseEntity
             .ok(
-                ProductResponseObject.fromEntity(updatedCompany)
+                ProductVO.fromEntity(updatedCompany)
             )
     }
 
@@ -62,6 +60,12 @@ internal class ProductController(val productService: ProductService) {
     fun deleteProduct(@PathVariable id: String): ResponseEntity<Void> {
         productService.deleteById(id)
         return ResponseEntity.noContent().build()
+    }
+
+    @GetMapping("/forceProductRating")
+    fun forceProductRating(): ResponseEntity<MutableList<Product>> {
+        val productResponse = productService.rateProduct()
+        return ResponseEntity.ok(productResponse)
     }
 
 }
