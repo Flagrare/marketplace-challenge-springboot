@@ -1,6 +1,9 @@
 package com.example.marketplace.entity
 
-data class Article(//    {
+import org.springframework.data.mongodb.core.mapping.Document
+
+@Document
+data class Article(
     var source: Source,
     var author: String? = null,
     var title: String? = null,
