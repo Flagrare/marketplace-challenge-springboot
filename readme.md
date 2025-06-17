@@ -1,92 +1,98 @@
-## Versão
+**Context:**
+This document outlines my attempt to solve a coding challenge for **Hotmart**. Below is the full description of the challenge provided as part of the task.
+For the challenge, I used **SpringBoot**.
+---
+
+## Version
 
 1.2.1
 
-## Contextualização
+## Context
 
-Imagine que você é desenvolvedor de uma empresa de tecnologia e sua nova tarefa é construir uma parte de um marketplace de produtos cujo o número de acesso é alto.
+Imagine you're a developer at a tech company, and your new task is to build part of a high-traffic product marketplace.
 
-Até o momento você já recebeu a descrição das seguintes entidades:
+So far, you’ve received the description of the following entities:
 
-- [x] Produto: identificador, nome, descrição, data de criação
-- [x] Comprador: identificador, nome
-- [x] Vendedor: identificador, nome
-- [x] Categoria do Produto: identificador, nome
-- [x] Venda: identificador, vendedor, comprador, produto
+* [x] Product: ID, name, description, creation date
+* [x] Buyer: ID, name
+* [x] Seller: ID, name
+* [x] Product Category: ID, name
+* [x] Sale: ID, seller, buyer, product
 
-Quando o comprador adquirir um novo produto, ele poderá fazer uma avaliação de 0 a 5. (Não está previamente mapeado nas entidades)
+When a buyer purchases a product, they can rate it from 0 to 5 (this rating is not yet mapped in the entities).
 
-Uma das partes mais importante para o marketplace que está sendo construído será a busca de produtos, cada produto receberá um score para ranqueamento diariamente, esse score deve ser calculado pela fórmula:
+One of the most important parts of the marketplace being built is the product search feature. Each product will receive a daily ranking score calculated using the following formula:
 
 ```
-X = Média de avaliação do produto nos últimos 12 meses
-Y = Quantidade de vendas/dias que o produto existe
-Z = Quantidade de notícias da categoria do produto no dia corrente
+X = Average rating of the product over the last 12 months  
+Y = Number of sales / days the product has existed  
+Z = Number of news articles related to the product category on the current day
 ```
 
 Score = X + Y + Z
 
-## O desafio
+## The Challenge
 
-Sua tarefa consiste em:
+Your task is to:
 
-- Criar um Crud(create, read, update, delete) de produtos.
-- Criar uma API de produtos e disponibilizar as operações de crud (list, find, delete, update, insert).
-- Criar um serviço para buscar os produtos ordenados pelo ranqueamento pelo nome e pela categoria.
-    - O output do serviço deve conter as informações `dataAtual` e `termoPesquisado`, bem como a lista de produtos que atendem à pesquisa. Os atributos de cada produto retornado são { `identificador`, `nome`, `descrição`, `data de criação`, `score`}
-- Todos os serviços devem ser auditados.
+* Create a CRUD (Create, Read, Update, Delete) for products.
+* Build a Product API exposing the CRUD operations (list, find, delete, update, insert).
+* Create a service to search for products ordered by ranking, filtered by name and category.
 
-## Observações:
+  * The service output must include the fields `currentDate` and `searchTerm`, along with the list of products matching the search. Each returned product must include: { `id`, `name`, `description`, `creationDate`, `score` }
+* All services must be auditable.
 
-- Para buscar a quantidade de notícias de uma determinada categoria você pode utilizar a api https://newsapi.org/ . Criar o mapeamento das entidades para atender ao cenário criado. Crie uma carga inicial para as entidades.
-- Considere consumir o endpoint https://newsapi.org/docs/endpoints/top-headlines 4 vezes ao dia (pode usar a estratégia que achar melhor), armazenar a informação no banco local e usar a data de publicação da notícia para fazer a lógica requerida.
+## Notes:
 
-## O que nós esperamos do seu teste
+* To get the number of news articles for a given category, you can use the API at [https://newsapi.org/](https://newsapi.org/). Model the entities accordingly to fit the scenario. Also, create initial data for these entities.
+* You should query the [https://newsapi.org/docs/endpoints/top-headlines](https://newsapi.org/docs/endpoints/top-headlines) endpoint 4 times a day (feel free to choose the best strategy), store the data locally, and use the publication date of each article to support the required logic.
 
-- Queremos entender sua proficiência técnica, raciocínio analítico (dê preferência para commits curtos e explicativos) e apresentação de resultados.
-- Você não precisa necessariamente fazer tudo que foi proposto porém, queremos ter uma clara percepção sobre como você resolve problemas.
-- Para isso fique a vontade para incluir/alterar/remover Entidades, atributos nas entidades existem, tecnologias, jobs, e o que mais sentir necessidade para atender melhor a demanda.
+## What We Expect from Your Test
 
-## Mais especificamente na entrega do projeto gostaríamos de ver:
+* We want to assess your technical skills, analytical thinking (preferably through short and clear commit messages), and how you present results.
+* You don’t have to implement everything listed, but we want a clear sense of how you approach problem-solving.
+* Feel free to include/modify/remove entities, attributes, technologies, jobs, or anything else necessary to better address the challenge.
 
-- Documentação.
-- Utilização adequada das bibliotecas.
-- Código escrito da maneira mais semântica possível, legibilidade importa tanto quanto performance, muitas vezes um não precisa comprometer o outro.
-- Desacoplamento e uma clara Hierarquia entre componentes do sistema.
-- Testes automatizados.
+## Specifically, in your project delivery, we would like to see:
 
-## O que nós ficaríamos felizes de ver em seu teste
+* Documentation
+* Appropriate use of libraries
+* Code written with clear semantics – readability is just as important as performance, and they don’t have to conflict.
+* Decoupling and a clear hierarchy between system components
+* Automated testing
 
-- Tolerância a falha, na chamada da lib externa é possível implementar uma tolerância para deixar o serviço mais robusto.
-- Cache - pesquise alguma biblioteca de cache para tornar a busca mais rápida
-- Suporte a paginação na listagem dos produtos
-- Conteinerização do projeto - Docker
-- Estratégia para evitar o consumo excessivo da api de notícias
-- Testes automatizados além do unitário
-- Utilização de ferramenta para versionamento dos scripts de carga
-- Arquitetura da solução, utilização de design patterns adequados e orientação a objetos
-- Colocar segurança nos endpoints que persistem dados. (Pode usar usuário/senha em memória)
-- Que todo o código esteja em inglês
+## Things That Would Impress Us
 
-## O que nós não gostaríamos
+* Fault tolerance – make the service more robust when calling the external news API.
+* Caching – research and implement a cache library to speed up searches.
+* Support for pagination in product listings
+* Project containerization – Docker
+* Strategy to avoid over-consuming the news API
+* Tests beyond unit tests (e.g., integration, end-to-end)
+* Use of a versioning tool for data loading scripts
+* Well-structured solution architecture, appropriate design patterns, and object-oriented design
+* Securing endpoints that persist data (you may use in-memory user/password auth)
+* All code written in English
 
-- Descobrir que não foi você quem fez seu teste
-- Não atendimento aos objetivos propostos.
-- Ver um código muito ilegível.
-- Não ter documentação com instruções de como rodar o seu código.
+## What We Don’t Want to See
 
-## O que avaliaremos de seu teste
+* Evidence that you didn’t do the test yourself
+* Missing the main objectives of the challenge
+* Very unreadable code
+* Lack of documentation or instructions on how to run your project
 
-- Alcance dos objetivos propostos.
-- Semântica, estrutura, legibilidade, manutenibilidade, escalabilidade do seu código e suas tomadas de decisões.
-- Organização do projeto.
-- Arquitetura da solução, utilização de design patterns adequados e orientação a objetos
-- Performance, resiliência e tratamento de erros.
-- Documentação da API.
-- Modelagem das entidades.
+## Evaluation Criteria
 
-# Pré-requisitos
+* Completion of proposed objectives
+* Code semantics, structure, readability, maintainability, scalability, and decision-making
+* Project organization
+* Solution architecture, appropriate use of design patterns and OOP
+* Performance, resilience, and error handling
+* API documentation
+* Entity modeling
 
-- Utilização da linguagem Java/Kotlin.
-- Não utilizar ferramentas e ou banco de dados que possuem licença comercial.
-- Todas tabelas devem ter no mínimo 100 registros.
+# Requirements
+
+* Must use Java or Kotlin
+* Do not use tools or databases with commercial licenses
+* Each table must contain at least 100 records
