@@ -1,7 +1,7 @@
 **Context:**
+
 This document outlines my attempt to solve a coding challenge for **Hotmart**. Below is the full description of the challenge provided as part of the task.
 For the challenge, I used **SpringBoot**.
----
 
 ## Version
 
