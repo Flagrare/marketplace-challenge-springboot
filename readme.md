@@ -1,5 +1,4 @@
 # Hotmart Code Challenge
----
 
 **Context:**
 
